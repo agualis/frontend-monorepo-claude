@@ -4,6 +4,13 @@ import type { NextConfig } from 'next'
 
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
+  // Optionally enable React Compiler
+  // Set ENABLE_REACT_COMPILER=true to enable
+  ...(process.env.ENABLE_REACT_COMPILER === 'true' && {
+    experimental: {
+      reactCompiler: true,
+    },
+  }),
   webpack: config => {
     config.resolve.fallback = {
       ...config.resolve.fallback,
@@ -13,6 +20,13 @@ const nextConfig: NextConfig = {
       '@react-native-async-storage/async-storage': false, // rainbowkit tries to find this during the build but we're not in react native here
     }
     config.externals.push('pino-pretty', 'lokijs', 'encoding')
+
+    // Exclude test files from node_modules to prevent bundling test dependencies
+    config.module.rules.push({
+      test: /node_modules\/.*\/test\/.*/,
+      use: 'null-loader',
+    })
+
     return config
   },
   logging: {
