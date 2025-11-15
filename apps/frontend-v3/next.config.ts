@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   turbopack: {
     //
   },
-  serverExternalPackages: ['pino-pretty', 'lokijs', 'encoding'],
+  serverExternalPackages: ['pino-pretty', 'lokijs', 'encoding', 'pino', 'thread-stream'],
   logging: {
     fetches: {
       fullUrl: true,
