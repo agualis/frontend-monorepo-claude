@@ -2,10 +2,17 @@ import type { NextConfig } from 'next'
 
 /** @type {import('next').NextConfig} */
 const config: NextConfig = {
+  // Optionally enable React Compiler
+  // Set ENABLE_REACT_COMPILER=true to enable
+  ...(process.env.ENABLE_REACT_COMPILER === 'true' && {
+    experimental: {
+      reactCompiler: true,
+    },
+  }),
   turbopack: {
     //
   },
-  serverExternalPackages: ['pino-pretty', 'lokijs', 'encoding'],
+  serverExternalPackages: ['pino-pretty', 'lokijs', 'encoding', 'thread-stream'],
   logging: {
     fetches: {
       fullUrl: true,
